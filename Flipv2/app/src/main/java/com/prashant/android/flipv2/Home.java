@@ -80,11 +80,12 @@ public class Home extends Fragment{
             paid = (TextView) getView().findViewById(R.id.paid);
             welcome = (TextView) getView().findViewById(R.id.welcome);
             try{
-                welcome.setText(con.getString(R.string.welcome)+" "+userDetails.name.toUpperCase());
+                welcome.setText(con.getString(R.string.welcome)+" "+userDetails.name);
                 pending.setText(con.getString(R.string.pending) + " " + json.getString("pfp"));
                 bonus.setText(con.getString(R.string.bonus) + " " + json.getString("bonusfp"));
                 cfp.setText(con.getString(R.string.confirmed) + " " + json.getString("cfp"));
                 paid.setText(con.getString(R.string.paid) + " " + json.getString("paid"));
+
             }catch(Exception e){
                 System.out.println("Error at 1");
             }

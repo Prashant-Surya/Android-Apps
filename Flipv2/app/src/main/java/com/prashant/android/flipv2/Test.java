@@ -70,8 +70,8 @@ public class Test extends ActionBarActivity {
                               btn.setText("Get Password");
                               break;
             case R.id.btnSignUp:
-                                 Toast.makeText(con,btn.getText(),Toast.LENGTH_SHORT).show();
-
+                                // Toast.makeText(con,btn.getText(),Toast.LENGTH_SHORT).show();
+                                    System.out.println(userDetails.mail+"Test");
                                  ip = new InUpProcessing(name.getText().toString(),mail.getText().toString(),pass.getText().toString(),btn.getText().toString());
                                     ip.execute();
                                 break;

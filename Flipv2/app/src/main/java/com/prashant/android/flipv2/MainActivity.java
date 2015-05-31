@@ -40,7 +40,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         setTitle("Flip Paisa");
         mainContext = getApplicationContext();
-        toolbar = (Toolbar) findViewById(   R.id.tool_bar);
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         //RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         //recyclerView.setLayoutManager(new GridLayoutManager(this,3));
@@ -110,5 +110,7 @@ public class MainActivity extends ActionBarActivity {
 
          }
     }*/
-
+    public void listClick(View li){
+        
+    }
 }

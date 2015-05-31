@@ -80,7 +80,7 @@
         android:id="@+id/LogOut"
         android:layout_below="@+id/paid"
         android:layout_alignRight="@+id/welcome"
-        android:layout_alignEnd="@+id/welcome"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="73dp" />
 
 </RelativeLayout>

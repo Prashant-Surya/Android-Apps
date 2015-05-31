@@ -22,7 +22,7 @@ public class listAdapter extends ArrayAdapter<rowHolder>{
     ArrayList<rowHolder> posts;
     public listAdapter(Context context, int resource, ArrayList<rowHolder> objects) {
         super(context, resource, objects);
-        this.context=context;
+         this.context=context;
         this.posts=objects;
     }
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -43,8 +43,8 @@ public class listAdapter extends ArrayAdapter<rowHolder>{
 
         holder.coup.setText(rowItem.getCoupons());
         holder.cash.setText(rowItem.getCashback());
-        Picasso.with(context).load(rowItem.getImg()).placeholder(R.drawable.placeholder).into(holder.img);
 
+        Picasso.with(context).load(rowItem.getImg()).placeholder(R.drawable.placeholder).into(holder.img);
         return convertView;
     }
     private class ViewHolder{
