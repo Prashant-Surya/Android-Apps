@@ -65,6 +65,7 @@ public class Home extends Fragment{
                 System.out.println(result);
                 json = new JSONObject(result);
             } catch (Exception e) {
+                System.out.println("At 68 net exception");
                 e.printStackTrace();
             }
 

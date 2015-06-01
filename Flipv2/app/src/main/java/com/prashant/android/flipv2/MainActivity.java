@@ -2,6 +2,7 @@ package com.prashant.android.flipv2;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -110,7 +111,16 @@ public class MainActivity extends ActionBarActivity {
 
          }
     }*/
-    public void listClick(View li){
-        
+    public void logout(View view){
+        SharedPreferences pref = getSharedPreferences("MyApp",MODE_PRIVATE);
+        SharedPreferences.Editor edit = pref.edit();
+        edit.remove("mail");
+        edit.remove("name");
+        edit.commit();
+        System.out.println("At 119 "+pref.getString("mail","NoVal"));
+        System.out.println("At 120 "+pref.getString("name","NoVal"));
+        Intent i = new Intent(this,Test.class);
+        startActivity(i);
+        finish();
     }
 }

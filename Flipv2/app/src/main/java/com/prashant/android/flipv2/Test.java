@@ -2,7 +2,9 @@ package com.prashant.android.flipv2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,6 +25,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +34,7 @@ public class Test extends ActionBarActivity {
     static int logIn = 0;
     static Context con;
     static TextView tv;
+    static SharedPreferences pref;
     EditText name,pass,mail;
     Button btn;
 //    String res;
@@ -46,6 +50,17 @@ public class Test extends ActionBarActivity {
         btn = (Button) findViewById(R.id.btnSignUp);
         pass = (EditText) findViewById(R.id.upPass);
         mail = (EditText) findViewById(R.id.upEmail);
+        pref = getSharedPreferences("MyApp",MODE_PRIVATE);
+        //SharedPreferences.Editor editor = pref.edit();
+        String m = pref.getString("mail","NoVal");
+        System.out.println("Testing pref"+m);
+        if(!m.equalsIgnoreCase("NoVal")){
+            System.out.println("Testing pref"+m);
+            userDetails.name=pref.getString("name","NoName");
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
     public void clicked(View v){
         switch(v.getId()){
@@ -103,6 +118,7 @@ public class Test extends ActionBarActivity {
     public class InUpProcessing extends AsyncTask<String,Void,String>{
         String name,mail,password,method,res;
             HttpPost httppost;
+        int flag = 0;
             HttpClient httpclient;
             JSONObject json;
         EditText passText;
@@ -116,7 +132,7 @@ public class Test extends ActionBarActivity {
 //            Toast.makeText(Test.con,"Test",Toast.LENGTH_LONG);
         }
         protected void onPreExecute(){
-            passText = (EditText) findViewById(R.id.upPass);
+            passText = (EditText) findViewById(R.id.upPass);flag =0;
         }
         @Override
         protected String doInBackground(String... params) {
@@ -141,10 +157,14 @@ public class Test extends ActionBarActivity {
                     json = new JSONObject(res);
                     restSuc = json.getString("success");
                     userDetails.name=json.getString("name");
+                    SharedPreferences.Editor edits= pref.edit();
+                    edits.putString("name",json.getString("name"));
+                    edits.commit();
+                    System.out.println("At 159 " + pref.getString("name", "Test"));
                     runOnUiThread(new Runnable() {
                         public void run() {
 
-                            Toast.makeText(Test.this,"Can't find,Use forgot Password instead", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Test.this, "Can't find,Use forgot Password instead", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -154,6 +174,7 @@ public class Test extends ActionBarActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error");
+                    flag=1;
                     //Toast.makeText(Test.con,"Exception",Toast.LENGTH_LONG).show();
                 }
             }
@@ -166,9 +187,13 @@ public class Test extends ActionBarActivity {
                     json = new JSONObject(res);
                     String restSuc = json.getString("success");
 
-                } catch (Exception e) {
+                }catch (UnknownHostException u){
+
+                }
+                catch (Exception e) {
                     e.printStackTrace();
                     System.out.println("Error");
+                    flag=1;
                     //Toast.makeText(Test.con,"Exception",Toast.LENGTH_LONG).show();
                 }
             }
@@ -183,10 +208,18 @@ public class Test extends ActionBarActivity {
         protected void onPostExecute(String s) {
             //super.onPostExecute(s);
             passText.setText("");
+            if(flag==1){
+                Toast.makeText(Test.con,"Check your internet Connection",Toast.LENGTH_LONG).show();
+                flag=0;
+            }
             if(restSuc.equalsIgnoreCase("1") && method.equalsIgnoreCase("Sign In")){
                 userDetails.mail=mail;
+                SharedPreferences.Editor edit = pref.edit();
+                edit.putString("mail",mail);
+                edit.commit();
                 Intent intent = new Intent(Test.this,MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         }
     }
