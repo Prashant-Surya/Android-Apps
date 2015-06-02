@@ -30,8 +30,8 @@ public class MainActivity extends ActionBarActivity {
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
 
-    CharSequence Titles[]={"Home","Stores","FAQ","Support"};
-    int Numboftabs = 4;
+    CharSequence Titles[]={"Home","Stores","Support"};
+    int Numboftabs = 3;
 
     public static Context mainContext;
 

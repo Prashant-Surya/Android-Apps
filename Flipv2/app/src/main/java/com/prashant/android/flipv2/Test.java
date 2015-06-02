@@ -146,7 +146,7 @@ public class Test extends ActionBarActivity {
             post.add(new BasicNameValuePair("pass",password));
             post.add(new BasicNameValuePair("name",name));
             post.add(new BasicNameValuePair("op",method));
-            TextView ts = (TextView) findViewById(R.id.text);
+            //TextView ts = (TextView) findViewById(R.id.text);
 
             if(method.equalsIgnoreCase("Sign In")){
                 try {
