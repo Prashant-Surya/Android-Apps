@@ -32,7 +32,7 @@
             android:textColorHint="#bbbbbb"
             android:drawableLeft="@drawable/email"/>
         <EditText
-            android:id="@+id/upName"
+            android:id="@+id/upUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_default_bg"
@@ -41,6 +41,19 @@
             android:hint="User Name"
             android:textColorHint="#bbbbbb"
             android:drawableLeft="@drawable/user"
+            android:visibility="gone"
+            />
+        <EditText
+            android:id="@+id/upName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_default_bg"
+            android:layout_marginTop="-2dp"
+            android:padding="10dp"
+            android:hint="Full Name"
+            android:textColorHint="#bbbbbb"
+            android:drawableLeft="@drawable/user"
+            android:visibility="gone"
             />
         <EditText
             android:id="@+id/upPass"
@@ -59,7 +72,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_margin="4dp"
-            android:text="Sign Up"
+            android:text="Sign In"
             android:onClick="clicked"
             android:background="@drawable/button_default_bg"
             />
@@ -69,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Or Sign In"
+        android:text="Or Sign Up"
         android:id="@+id/InOrUp"
         android:clickable="true"
         android:onClick="clicked"

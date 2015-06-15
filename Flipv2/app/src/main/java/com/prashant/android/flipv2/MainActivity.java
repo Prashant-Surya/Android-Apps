@@ -30,8 +30,8 @@ public class MainActivity extends ActionBarActivity {
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
 
-    CharSequence Titles[]={"Home","Stores","Support"};
-    int Numboftabs = 3;
+    CharSequence Titles[]={"Home","Stores","Coupons","Apps"};
+    int Numboftabs = 4;
 
     public static Context mainContext;
 
@@ -86,7 +86,16 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            //Toast.makeText(getApplicationContext(),"Settings",Toast.LENGTH_SHORT);
+            SharedPreferences pref = getSharedPreferences("MyApp",MODE_PRIVATE);
+            SharedPreferences.Editor edit = pref.edit();
+            edit.remove("mail");
+            edit.remove("name");
+            edit.commit();
+            System.out.println("At 119 "+pref.getString("mail","NoVal"));
+            System.out.println("At 120 "+pref.getString("name","NoVal"));
+            Intent i = new Intent(this,Test.class);
+            startActivity(i);
+            finish();
             return true;
         }
 
