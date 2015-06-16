@@ -75,18 +75,21 @@ public class Home extends Fragment{
         @Override
         protected void onPostExecute(String s) {
             //super.onPostExecute(s);
-            pending = (TextView) getView().findViewById(R.id.pending);
-            bonus = (TextView) getView().findViewById(R.id.bonus);
-            cfp = (TextView) getView().findViewById(R.id.confirmed);
-            paid = (TextView) getView().findViewById(R.id.paid);
-            welcome = (TextView) getView().findViewById(R.id.welcome);
+
             try{
+                pending = (TextView) getView().findViewById(R.id.pending);
+                bonus = (TextView) getView().findViewById(R.id.bonus);
+                cfp = (TextView) getView().findViewById(R.id.confirmed);
+                paid = (TextView) getView().findViewById(R.id.paid);
+                welcome = (TextView) getView().findViewById(R.id.welcome);
                 welcome.setText(con.getString(R.string.welcome)+" "+userDetails.name);
                 pending.setText(con.getString(R.string.pending) + " " + json.getString("pfp"));
                 bonus.setText(con.getString(R.string.bonus) + " " + json.getString("bonusfp"));
                 cfp.setText(con.getString(R.string.confirmed) + " " + json.getString("cfp"));
                 paid.setText(con.getString(R.string.paid) + " " + json.getString("paid"));
 
+            }catch(NullPointerException ne) {
+                System.out.println("Null pointer exception at home");
             }catch(Exception e){
                 System.out.println("Error at 1");
             }
