@@ -30,15 +30,15 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             Store store = new Store();
             return store;
         }
-        else{    //if(position == 2){
-            Support sup = new Support();
-            return sup;
+        else if(position == 2){
+            Coupon_tab cp = new Coupon_tab();
+            return cp;
 
         }
-        /*else {
-            Faq faq = new Faq();
-            return faq;
-        }*/
+        else {
+            apps_tab ap = new apps_tab();
+            return ap;
+        }
     }
     public CharSequence getPageTitle(int position) {
         return Titles[position];

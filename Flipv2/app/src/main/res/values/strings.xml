@@ -22,4 +22,13 @@
         <item>Uranus</item>
         <item>Neptune</item>
     </string-array>
+	<string-array name ="categories">
+        <item>All</item>
+        <item>Clothing</item>
+        <item>Electronics</item>
+        <item>Recharge</item>
+        <item>Travel</item>
+        <item>Food</item>
+        <item>Others</item>
+    </string-array>
 </resources>
