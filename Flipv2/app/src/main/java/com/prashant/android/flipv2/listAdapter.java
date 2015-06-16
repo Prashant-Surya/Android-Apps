@@ -32,24 +32,28 @@ public class listAdapter extends ArrayAdapter<rowHolder>{
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.list_item, null);
+            convertView = mInflater.inflate(R.layout.store_primary, null);
             holder = new ViewHolder();
-            holder.coup = (TextView) convertView.findViewById(R.id.listCoupons);
+            /*holder.coup = (TextView) convertView.findViewById(R.id.listCoupons);
             holder.cash = (TextView) convertView.findViewById(R.id.listCashback);
-            holder.img = (ImageView) convertView.findViewById(R.id.listImage);
+            holder.img = (ImageView) convertView.findViewById(R.id.listImage);*/
+            holder.store = (TextView) convertView.findViewById(R.id.storeName);
+            holder.img = (ImageView)convertView.findViewById(R.id.storeSquare);
             convertView.setTag(holder);
         } else
             holder = (ViewHolder) convertView.getTag();
 
-        holder.coup.setText(rowItem.getCoupons());
+        /*holder.coup.setText(rowItem.getCoupons());
         holder.cash.setText(rowItem.getCashback());
 
-        Picasso.with(context).load(rowItem.getImg()).placeholder(R.drawable.placeholder).into(holder.img);
+
+        Picasso.with(context).load(rowItem.getImg()).placeholder(R.drawable.placeholder).into(holder.img);*/
+        holder.store.setText(rowItem.getStore());
+        holder.img.setImageBitmap(rowItem.getBitmap());
         return convertView;
     }
     private class ViewHolder{
         ImageView img;
-        TextView coup;
-        TextView cash;
+        TextView store;
     }
 }
