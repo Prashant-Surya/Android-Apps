@@ -3,13 +3,19 @@ package com.prashant.android.flipv2;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -21,15 +27,34 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class Store_secondary extends ActionBarActivity {
     ImageView img;
-    String store;
+    String store,sp1,sp2,sp3,sp4;
+    TableLayout table;
+    ArrayList<String> rows;
+    ListView flist,olist;
+    ArrayAdapter<String> adapter;
+    TextView f1,f2,f3,o1;
+    getCashBack gb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sp1="%   ";
+        sp2= "%         ";
+        sp3="%   ";
+        sp4="%      ";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_secondary);
+        flist = (ListView) findViewById(R.id.flipList);
+        olist = (ListView) findViewById(R.id.others);
+        f1 = (TextView) findViewById(R.id.mob);
+        f2 = (TextView) findViewById(R.id.web);
+        f3 = (TextView) findViewById(R.id.mold);
+        o1 = (TextView) findViewById(R.id.textView2);
+
+        //table = (TableLayout) findViewById(R.id.flipTable);
         Intent intent = getIntent();
         String image = intent.getStringExtra("image");
         store = intent.getStringExtra("store");
@@ -37,7 +62,8 @@ public class Store_secondary extends ActionBarActivity {
         Bitmap decodeBit = BitmapFactory.decodeByteArray(decoded, 0, decoded.length);
         img = (ImageView) findViewById(R.id.storeLarge);
         img.setImageBitmap(decodeBit);
-
+        gb = new getCashBack();
+        gb.execute(store);
     }
 
     @Override
@@ -61,6 +87,11 @@ public class Store_secondary extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    public void gotostore(View V){
+        String url = "https://www.flippaisa.com/store/manager/?sid="+store;
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
+    }
     public class getCashBack extends AsyncTask<String,Void,String>{
         HttpClient httpClient;
         HttpGet httpGet;
@@ -72,6 +103,7 @@ public class Store_secondary extends ActionBarActivity {
         protected String doInBackground(String... params) {
             String store = params[0];
             String url = "http://flippaisa.com/iprashant/getcashback.php?store="+store;
+            String temp="";
             httpClient = new DefaultHttpClient();
             httpGet = new HttpGet(url);
             try {
@@ -79,10 +111,34 @@ public class Store_secondary extends ActionBarActivity {
                 res = EntityUtils.toString(httpResponse.getEntity());
                 jsonResponse = new JSONObject(res);
                 jarray = jsonResponse.getJSONArray(store);
-                for(int i=0;i<jarray.length();i++){
-                    json = jarray.getJSONObject(i);
-                    if(store.equalsIgnoreCase("flipkart")){
+                if(store.equalsIgnoreCase("flipkart")){
+                    rows = new ArrayList<String>();
+                    o1.setVisibility(o1.GONE);
+                    olist.setVisibility(olist.GONE);
+                    for(int i=0;i<jarray.length();i++){
+                        temp="    ";
+                        json = jarray.getJSONObject(i);
+                        temp+=json.getString("mo")+sp1;
+                        temp+=json.getString("mn")+sp2;
+                        temp+=json.getString("wo")+sp3;
+                        temp+=json.getString("wn")+sp4;
+                        temp+=json.getString("details");
+                        rows.add(temp);
+                    }
 
+                }
+                else{
+                    f1.setVisibility(f1.GONE);
+                    f2.setVisibility(f2.GONE);
+                    f3.setVisibility(f3.GONE);
+                    flist.setVisibility(flist.GONE);
+                    rows = new ArrayList<String>();
+                    for(int i=0;i<jarray.length();i++){
+                        temp="     ";
+                        json = jarray.getJSONObject(i);
+                        temp += json.getString("c")+"%            ";
+                        temp += json.getString("details");
+                        rows.add(temp);
                     }
                 }
 
@@ -92,6 +148,17 @@ public class Store_secondary extends ActionBarActivity {
                 e.printStackTrace();
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            //super.onPostExecute(s);
+            adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.fliplist_item,rows);
+            if(store.equalsIgnoreCase("flipkart")) {
+                flist.setAdapter(adapter);
+            }else{
+                olist.setAdapter(adapter);
+            }
         }
     }
 }
