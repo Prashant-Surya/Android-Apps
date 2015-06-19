@@ -9,6 +9,24 @@ import android.graphics.Bitmap;
 public class rowHolder {
     String store;
     Bitmap bitmap;
+    String largeBit;
+    String category;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getLargeBit() {
+        return largeBit;
+    }
+
+    public void setLargeBit(String largeBit) {
+        this.largeBit = largeBit;
+    }
 
     public void setStore(String store) {
         this.store = store;

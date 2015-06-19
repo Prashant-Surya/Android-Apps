@@ -31,4 +31,5 @@
         <item>Food</item>
         <item>Others</item>
     </string-array>
+    <string name="title_activity_store_secondary">Store</string>
 </resources>

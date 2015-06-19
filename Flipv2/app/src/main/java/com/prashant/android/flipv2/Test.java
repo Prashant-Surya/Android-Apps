@@ -155,6 +155,7 @@ public class Test extends ActionBarActivity {
         }
         @Override
         protected String doInBackground(String... params) {
+            System.out.println("Entered processing at 158");
             httpclient = new DefaultHttpClient();
             //Toast.makeText(Test.con,"Testing Phase",Toast.LENGTH_LONG).show();
 //            httppost = new HttpPost("localhost/forflippaisa/login_check.php");
@@ -182,6 +183,7 @@ public class Test extends ActionBarActivity {
                     try {
                         httppost.setEntity(new UrlEncodedFormEntity(post));
                         response = httpclient.execute(httppost);
+                        System.out.println("Response received");
                         res = EntityUtils.toString(response.getEntity());
                         System.out.println(res);
                         json = new JSONObject(res);
