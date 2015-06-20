@@ -88,9 +88,29 @@ public class Store_secondary extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
     public void gotostore(View V){
-        String url = "https://www.flippaisa.com/store/manager/?sid="+store;
+        String url = "https://www.flippaisa.com/store/manager/?m=APP&sid="+store;
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(browserIntent);
+    }
+    public void settingViews(){
+        adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.fliplist_item,rows);
+        if(store.equalsIgnoreCase("flipkart")) {
+            o1.setVisibility(o1.GONE);
+            olist.setVisibility(olist.GONE);
+            f1.setVisibility(f1.VISIBLE);
+            f2.setVisibility(f2.VISIBLE);
+            f3.setVisibility(f3.VISIBLE);
+            flist.setVisibility(flist.VISIBLE);
+            flist.setAdapter(adapter);
+        }else{
+            o1.setVisibility(o1.VISIBLE);
+            olist.setVisibility(olist.VISIBLE);
+            f1.setVisibility(f1.GONE);
+            f2.setVisibility(f2.GONE);
+            f3.setVisibility(f3.GONE);
+            flist.setVisibility(flist.GONE);
+            olist.setAdapter(adapter);
+        }
     }
     public class getCashBack extends AsyncTask<String,Void,String>{
         HttpClient httpClient;
@@ -113,8 +133,7 @@ public class Store_secondary extends ActionBarActivity {
                 jarray = jsonResponse.getJSONArray(store);
                 if(store.equalsIgnoreCase("flipkart")){
                     rows = new ArrayList<String>();
-                    o1.setVisibility(o1.GONE);
-                    olist.setVisibility(olist.GONE);
+
                     for(int i=0;i<jarray.length();i++){
                         temp="    ";
                         json = jarray.getJSONObject(i);
@@ -128,10 +147,7 @@ public class Store_secondary extends ActionBarActivity {
 
                 }
                 else{
-                    f1.setVisibility(f1.GONE);
-                    f2.setVisibility(f2.GONE);
-                    f3.setVisibility(f3.GONE);
-                    flist.setVisibility(flist.GONE);
+
                     rows = new ArrayList<String>();
                     for(int i=0;i<jarray.length();i++){
                         temp="     ";
@@ -152,13 +168,8 @@ public class Store_secondary extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            //super.onPostExecute(s);
-            adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.fliplist_item,rows);
-            if(store.equalsIgnoreCase("flipkart")) {
-                flist.setAdapter(adapter);
-            }else{
-                olist.setAdapter(adapter);
-            }
+            super.onPostExecute(s);
+            settingViews();
         }
     }
 }
